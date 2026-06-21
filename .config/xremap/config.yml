@@ -1,21 +1,39 @@
 keymap:
-  - name: Emacs bindings (global, except terminal/Emacs)
+  - name: Emacs bindings (movement/mark, global except terminal/Emacs)
     application:
       not:
         - org.gnome.Ptyxis
         - org.gnome.Terminal
         - Emacs
     remap:
-      C-a: Home
-      C-e: End
-      C-f: Right
-      C-b: Left
-      C-n: Down
-      C-p: Up
-      C-d: Delete
-      C-h: BackSpace
+      # Cursor (right Ctrl only; left Ctrl passes through unmodified)
+      C_R-b: { with_mark: Left }
+      C_R-f: { with_mark: Right }
+      C_R-p: { with_mark: Up }
+      C_R-n: { with_mark: Down }
+      # Forward/backward word
+      M-b: { with_mark: C-Left }
+      M-f: { with_mark: C-Right }
+      # Beginning/end of line
+      C_R-a: { with_mark: Home }
+      C_R-e: { with_mark: End }
+      # Page up/down (note: overrides the standard Ctrl+V paste shortcut, right Ctrl only)
+      M-v: { with_mark: PageUp }
+      C_R-v: { with_mark: PageDown }
+      # Beginning/end of file
+      M-Shift-comma: { with_mark: C-Home }
+      M-Shift-dot: { with_mark: C-End }
+      # Newline
+      C_R-m: Enter
+      C_R-j: Enter
+      # Delete
+      C_R-d: [Delete, { set_mark: false }]
+      C_R-h: BackSpace
+      # Mark (note: overrides fcitx5's secondary Ctrl+Space trigger and editor autocomplete, right Ctrl only)
+      C_R-space: { set_mark: true }
+      C_R-M-space: [C-Shift-Right, { set_mark: true }]
 
-  - name: Emacs bindings (cut, except terminal/Emacs/VS Code)
+  - name: Emacs bindings (cut/copy/yank/word-delete, except terminal/Emacs/VS Code)
     application:
       not:
         - org.gnome.Ptyxis
@@ -23,7 +41,29 @@ keymap:
         - Emacs
         - code
     remap:
-      # Cut (overrides e.g. Chrome's tab-close, since the original key never reaches the app)
-      C-w: [C-x, { set_mark: false }]
+      # Cut (right Ctrl only; overrides e.g. Chrome's tab-close since the original key never reaches the app)
+      C_R-w: [C-x, { set_mark: false }]
+      # Copy
+      M-w: [C-c, { set_mark: false }]
+      # Paste/yank (note: overrides the standard Ctrl+Y redo shortcut in many apps, right Ctrl only)
+      C_R-y: [C-v, { set_mark: false }]
       # Kill line: select to end of line, then cut
-      C-k: [Shift-end, C-x, { set_mark: false }]
+      C_R-k: [Shift-End, C-x, { set_mark: false }]
+      # Delete word forward/backward
+      M-d: [C-Delete, { set_mark: false }]
+      Alt-BackSpace: [C-BackSpace, { set_mark: false }]
+      # C-x prefix, right Ctrl only (note: plain right-Ctrl+X cut no longer works unless followed by one of these; left Ctrl+X is untouched)
+      C_R-x:
+        remap:
+          # C-x h: select all
+          h: [C-Home, C-a, { set_mark: true }]
+          # C-x C-f: open
+          C_R-f: C-o
+          # C-x C-s: save
+          C_R-s: C-s
+          # C-x k: close tab
+          k: C-F4
+          # C-x C-c: quit
+          C_R-c: C-q
+          # C-x u: undo
+          u: [C-z, { set_mark: false }]

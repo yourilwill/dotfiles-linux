@@ -60,8 +60,9 @@ sudo make install
 - `bashrc.local` — `.bashrc`本体はデフォルトのまま維持し、これだけを追加でsourceする（diffだけをgit管理）。`LC_MESSAGES`/`LC_TIME`を`en_US.UTF-8`にし、タイムゾーン・`LANG`は`ja_JP.UTF-8`のまま、コマンド出力やdateの表示を英語化している
 - `.gitconfig` — `user.name` / `user.email` などのGit設定
 - `.config/fcitx5/config` — fcitx5の設定。右Alt(`Alt_R`)でIMEオン、左Alt(`Alt_L`)でIMEオフになるように`ActivateKeys`/`DeactivateKeys`を追加している
-- `.config/xremap/config.yml` — xremap(Karabiner相当のシステム全体キーリマッパー)の設定
-  - カーソル移動(C-a/e/f/b/n/p/d/h): ターミナル(`org.gnome.Ptyxis`)とEmacs自体を除く全アプリで有効
-  - カット(C-w)・行末まで削除(C-k): 上記に加えVS Code(`code`)も除外（Ctrl+Kから始まるチェインコマンドと衝突するため）。Chromeには適用しており、Ctrl+Wでタブは閉じず代わりにCutが送られる
+- `.config/xremap/config.yml` — xremap(Karabiner相当のシステム全体キーリマッパー)の設定。[公式のemacs.yml例](https://github.com/xremap/xremap/blob/master/example/emacs.yml)をベースに、**右Ctrl(`C_R`)のみ**でEmacsバインドを発動し、左Ctrlは標準動作のまま通過させる
+  - カーソル移動・マーク(C_R-a/e/f/b/n/p/d/h/v/space, M-b/f/v, M-Shift-,/.): ターミナル(`org.gnome.Ptyxis`)とEmacs自体を除く全アプリで有効。`C_R-v`は標準の貼り付け、`C_R-space`はfcitx5の予備トリガー/エディタの自動補完と衝突するが右Ctrl限定なので影響は小さい
+  - カット・コピー・ヤンク・単語削除(C_R-w/y/k, M-w/d, Alt-BackSpace)・C_R-xプレフィックス(h/C_R-f/C_R-s/k/C_R-c/u): 上記に加えVS Code(`code`)も除外（Ctrl+Kチェインコマンド等と衝突するため）。`C_R-y`は標準のRedo、`C_R-x`プレフィックスは右Ctrl+Xでのカットと衝突するが、いずれも右Ctrl限定
+  - `C-s`/`C-r`/`C-o`/`C-slash`/`C-g`単体は保存・検索・リロード等の標準動作を壊すため意図的に追加していない
 - `.config/systemd/user/xremap.service` — xremapをsystemdユーザーサービスとして自動起動するunit
 - `install.sh` — 上記のセットアップを行うスクリプト

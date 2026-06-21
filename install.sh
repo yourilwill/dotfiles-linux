@@ -38,4 +38,7 @@ for file in "${LINK_FILES[@]}"; do
   echo "$target -> $DOTFILES_DIR/$file"
 done
 
+mkdir -p "$HOME/.config/autostart"
+cp /usr/share/applications/org.fcitx.Fcitx5.desktop "$HOME/.config/autostart/org.fcitx.Fcitx5.desktop"
+
 fcitx5-remote -r >/dev/null 2>&1 || true

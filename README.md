@@ -28,6 +28,7 @@
    - `~/.bashrc`の末尾に`bashrc.local`を読み込む設定を追加
    - `~/.gitconfig`を`.gitconfig`へのシンボリックリンクに置き換え
    - `~/.config/fcitx5/config`を`.config/fcitx5/config`へのシンボリックリンクに置き換え、`fcitx5-remote -r`でリロード
+   - `~/.config/autostart/org.fcitx.Fcitx5.desktop`を配置（GNOMEではfcitx5がデフォルトで自動起動エントリを持たないため、これが無いとログインしてもfcitx5が起動しない）
 
 4. 入力メソッドの切り替えを反映するため、一度ログアウト→ログインする
 

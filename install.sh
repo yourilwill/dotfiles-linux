@@ -5,14 +5,11 @@ sudo apt update
 sudo apt install -y git curl
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-FILES=(.bashrc)
 
-for file in "${FILES[@]}"; do
-  target="$HOME/$file"
-  if [ -e "$target" ] && [ ! -L "$target" ]; then
-    mv "$target" "$target.bak"
-    echo "既存の $target を $target.bak に退避しました"
-  fi
-  ln -sf "$DOTFILES_DIR/$file" "$target"
-  echo "$target -> $DOTFILES_DIR/$file"
-done
+SOURCE_LINE=". \"$DOTFILES_DIR/bashrc.local\""
+if ! grep -qF "$SOURCE_LINE" "$HOME/.bashrc" 2>/dev/null; then
+  printf '\n%s\n' "$SOURCE_LINE" >> "$HOME/.bashrc"
+  echo "$HOME/.bashrc に $DOTFILES_DIR/bashrc.local の読み込みを追加しました"
+else
+  echo "$HOME/.bashrc は既に $DOTFILES_DIR/bashrc.local を読み込み済みです"
+fi

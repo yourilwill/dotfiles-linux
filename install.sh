@@ -33,7 +33,7 @@ else
   echo "$HOME/.bashrc は既に $DOTFILES_DIR/bashrc.local を読み込み済みです"
 fi
 
-LINK_FILES=(.gitconfig .config/fcitx5/config .config/xremap/config.yml .config/systemd/user/xremap.service .config/wezterm/wezterm.lua)
+LINK_FILES=(.gitconfig .config/fcitx5/config .config/xremap/config.yml .config/systemd/user/xremap.service .config/wezterm/wezterm.lua .config/herdr/config.toml)
 for file in "${LINK_FILES[@]}"; do
   target="$HOME/$file"
   mkdir -p "$(dirname "$target")"

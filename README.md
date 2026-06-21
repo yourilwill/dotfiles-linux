@@ -35,6 +35,7 @@
    - `xremap`のGNOME Shell拡張(`xremap@k0kubun.com`)をclone（フォーカス中のアプリ名を取得するために必要。**有効化は手動**: ログイン後に`gnome-extensions enable xremap@k0kubun.com`を実行）
    - `~/.config/xremap/config.yml`をシンボリックリンクに置き換え、`xremap.service`をsystemdユーザーサービスとして有効化・起動
    - [herdr](https://herdr.dev/)を公式インストールスクリプトで`~/.local/bin/herdr`にインストール
+   - `~/.config/herdr/config.toml`を`.config/herdr/config.toml`へのシンボリックリンクに置き換え
 
 4. 入力メソッドの切り替え、`input`グループ、GNOME Shell拡張を反映するため、一度ログアウト→ログインする。その後、初回のみ次を実行して拡張を有効化する:
 
@@ -64,9 +65,10 @@ sudo make install
 - `.config/fcitx5/config` — fcitx5の設定。右Alt(`Alt_R`)でIMEオン、左Alt(`Alt_L`)でIMEオフになるように`ActivateKeys`/`DeactivateKeys`を追加している
 - `.config/xremap/config.yml` — xremap(Karabiner相当のシステム全体キーリマッパー)の設定。[公式のemacs.yml例](https://github.com/xremap/xremap/blob/master/example/emacs.yml)をベースに、**右Ctrl(`C_R`)・左Alt(`M_L`)のみ**でEmacsバインドを発動し、左Ctrl・右Altは標準動作のまま通過させる（右Altはfcitx5のIMEオン用キーとして使うため、あえて標準Altのまま）
   - `modmap`でCapsLockを右Ctrl(`Control_R`)に変換（CapsLockのオン/オフ機能は無効化され、右Ctrlとして動作。Emacsバインドも発動する）
-  - カーソル移動・マーク(C_R-a/e/f/b/n/p/d/h/v/space, M_L-b/f/v, M_L-Shift-,/.): ターミナル(`org.gnome.Ptyxis`)とEmacs自体を除く全アプリで有効。`C_R-v`は標準の貼り付け、`C_R-space`はfcitx5の予備トリガー/エディタの自動補完と衝突するが右Ctrl限定なので影響は小さい
+  - カーソル移動・マーク(C_R-a/e/f/b/n/p/d/h/v/space, M_L-b/f/v, M_L-Shift-,/.): ターミナル(`org.gnome.Ptyxis`)・WezTerm(`org.wezfurlong.wezterm`)とEmacs自体を除く全アプリで有効。`C_R-v`は標準の貼り付け、`C_R-space`はfcitx5の予備トリガー/エディタの自動補完と衝突するが右Ctrl限定なので影響は小さい。WezTermを除外しているのはherdrのペイン移動(Alt+h/j/k/l)等、左Alt系のターミナル内ショートカットと衝突させないため
   - カット・コピー・ヤンク・単語削除(C_R-w/y/k, M_L-w/d, M_L-BackSpace)・C_R-xプレフィックス(h/C_R-f/C_R-s/k/C_R-c/u): 上記に加えVS Code(`code`)も除外（Ctrl+Kチェインコマンド等と衝突するため）。`C_R-y`は標準のRedo、`C_R-x`プレフィックスは右Ctrl+Xでのカットと衝突するが、いずれも右Ctrl限定。左AltはfcitxのIMEオフ(`Alt_L`単体)と共存（単体押しと組み合わせ押しは別判定のため衝突しない）
   - `C-s`/`C-r`/`C-o`/`C-slash`/`C-g`単体は保存・検索・リロード等の標準動作を壊すため意図的に追加していない
 - `.config/systemd/user/xremap.service` — xremapをsystemdユーザーサービスとして自動起動するunit
-- `.config/wezterm/wezterm.lua` — WezTermの設定。フォントをJetBrainsMono Nerd Font Monoに指定
+- `.config/wezterm/wezterm.lua` — WezTermの設定。カラースキームを`Dracula (Gogh)`、フォントをJetBrainsMono Nerd Font Monoに指定
+- `.config/herdr/config.toml` — herdrの設定。ペイン移動(`focus_pane_left/down/up/right`)をAlt+h/j/k/lに直接バインド（vimの方向キーと同じ並び）
 - `install.sh` — 上記のセットアップを行うスクリプト

@@ -9,6 +9,7 @@ keymap:
       not:
         - org.gnome.Ptyxis
         - org.gnome.Terminal
+        - org.wezfurlong.wezterm
         - Emacs
     remap:
       # Cursor (right Ctrl only; left Ctrl passes through unmodified)
@@ -43,6 +44,7 @@ keymap:
       not:
         - org.gnome.Ptyxis
         - org.gnome.Terminal
+        - org.wezfurlong.wezterm
         - Emacs
         - code
     remap:

@@ -81,3 +81,7 @@ fi
 
 systemctl --user daemon-reload
 systemctl --user enable --now xremap.service 2>&1 || echo "xremap.service の起動に失敗しました（input グループの反映にログアウト/ログインが必要な場合があります）"
+
+if [ ! -x "$HOME/.local/bin/herdr" ]; then
+  curl -fsSL https://herdr.dev/install.sh | sh
+fi

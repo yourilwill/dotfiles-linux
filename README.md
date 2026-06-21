@@ -34,6 +34,7 @@
    - ユーザーを`input`グループに追加し、`/dev/uinput`用のudevルールを追加（`xremap`が`/dev/input`を読むのに必要）
    - `xremap`のGNOME Shell拡張(`xremap@k0kubun.com`)をclone（フォーカス中のアプリ名を取得するために必要。**有効化は手動**: ログイン後に`gnome-extensions enable xremap@k0kubun.com`を実行）
    - `~/.config/xremap/config.yml`をシンボリックリンクに置き換え、`xremap.service`をsystemdユーザーサービスとして有効化・起動
+   - [herdr](https://herdr.dev/)を公式インストールスクリプトで`~/.local/bin/herdr`にインストール
 
 4. 入力メソッドの切り替え、`input`グループ、GNOME Shell拡張を反映するため、一度ログアウト→ログインする。その後、初回のみ次を実行して拡張を有効化する:
 

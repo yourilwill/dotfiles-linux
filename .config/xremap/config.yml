@@ -1,3 +1,8 @@
+modmap:
+  - name: CapsLock to right Ctrl
+    remap:
+      CapsLock: Control_R
+
 keymap:
   - name: Emacs bindings (movement/mark, global except terminal/Emacs)
     application:

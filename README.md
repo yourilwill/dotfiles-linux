@@ -36,6 +36,8 @@
    - `~/.config/xremap/config.yml`をシンボリックリンクに置き換え、`xremap.service`をsystemdユーザーサービスとして有効化・起動
    - [herdr](https://herdr.dev/)を公式インストールスクリプトで`~/.local/bin/herdr`にインストール
    - `~/.config/herdr/config.toml`を`.config/herdr/config.toml`へのシンボリックリンクに置き換え
+   - [oh-my-posh](https://ohmyposh.dev/)バイナリを`~/.local/bin/oh-my-posh`にダウンロード（bashプロンプトに使用、`bashrc.local`で読み込み）
+   - `~/.config/oh-my-posh/dracula.omp.json`を`.config/oh-my-posh/dracula.omp.json`へのシンボリックリンクに置き換え
 
 4. 入力メソッドの切り替え、`input`グループ、GNOME Shell拡張を反映するため、一度ログアウト→ログインする。その後、初回のみ次を実行して拡張を有効化する:
 
@@ -60,7 +62,7 @@ sudo make install
 
 ## 管理しているファイル
 
-- `bashrc.local` — `.bashrc`本体はデフォルトのまま維持し、これだけを追加でsourceする（diffだけをgit管理）。`LC_MESSAGES`/`LC_TIME`を`en_US.UTF-8`にし、タイムゾーン・`LANG`は`ja_JP.UTF-8`のまま、コマンド出力やdateの表示を英語化している
+- `bashrc.local` — `.bashrc`本体はデフォルトのまま維持し、これだけを追加でsourceする（diffだけをgit管理）。`LC_MESSAGES`/`LC_TIME`を`en_US.UTF-8`にし、タイムゾーン・`LANG`は`ja_JP.UTF-8`のまま、コマンド出力やdateの表示を英語化している。エイリアス`h=herdr`/`g=git`、`oh-my-posh`によるpowerline風プロンプトの設定も含む（Nerd Font前提）
 - `.gitconfig` — `user.name` / `user.email` などのGit設定
 - `.config/fcitx5/config` — fcitx5の設定。右Alt(`Alt_R`)でIMEオン、左Alt(`Alt_L`)でIMEオフになるように`ActivateKeys`/`DeactivateKeys`を追加している
 - `.config/xremap/config.yml` — xremap(Karabiner相当のシステム全体キーリマッパー)の設定。[公式のemacs.yml例](https://github.com/xremap/xremap/blob/master/example/emacs.yml)をベースに、**右Ctrl(`C_R`)・左Alt(`M_L`)のみ**でEmacsバインドを発動し、左Ctrl・右Altは標準動作のまま通過させる（右Altはfcitx5のIMEオン用キーとして使うため、あえて標準Altのまま）
@@ -71,4 +73,5 @@ sudo make install
 - `.config/systemd/user/xremap.service` — xremapをsystemdユーザーサービスとして自動起動するunit
 - `.config/wezterm/wezterm.lua` — WezTermの設定。カラースキームを`Dracula (Gogh)`、フォントをJetBrainsMono Nerd Font Monoに指定
 - `.config/herdr/config.toml` — herdrの設定。ペイン移動(`focus_pane_left/down/up/right`)をAlt+h/j/k/lに直接バインド（vimの方向キーと同じ並び）
+- `.config/oh-my-posh/dracula.omp.json` — bashプロンプト(`oh-my-posh`)用の公式Draculaテーマ（オリジナルは[oh-my-posh本体のthemesディレクトリ](https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/dracula.omp.json)）
 - `install.sh` — 上記のセットアップを行うスクリプト

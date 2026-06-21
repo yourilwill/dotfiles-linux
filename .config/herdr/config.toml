@@ -1,6 +1,10 @@
 onboarding = false
 
 [keys]
+prefix = "ctrl+t"
+detach = "prefix+d"
+next_tab = "alt+n"
+previous_tab = "alt+p"
 focus_pane_left = "alt+h"
 focus_pane_down = "alt+j"
 focus_pane_up = "alt+k"

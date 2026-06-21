@@ -33,7 +33,7 @@ else
   echo "$HOME/.bashrc は既に $DOTFILES_DIR/bashrc.local を読み込み済みです"
 fi
 
-LINK_FILES=(.gitconfig .config/fcitx5/config .config/xremap/config.yml .config/systemd/user/xremap.service .config/wezterm/wezterm.lua .config/herdr/config.toml)
+LINK_FILES=(.gitconfig .config/fcitx5/config .config/xremap/config.yml .config/systemd/user/xremap.service .config/wezterm/wezterm.lua .config/herdr/config.toml .config/oh-my-posh/dracula.omp.json)
 for file in "${LINK_FILES[@]}"; do
   target="$HOME/$file"
   mkdir -p "$(dirname "$target")"
@@ -84,4 +84,13 @@ systemctl --user enable --now xremap.service 2>&1 || echo "xremap.service の起
 
 if [ ! -x "$HOME/.local/bin/herdr" ]; then
   curl -fsSL https://herdr.dev/install.sh | sh
+fi
+
+# oh-my-posh: bash prompt (Dracula theme)
+if [ ! -x "$HOME/.local/bin/oh-my-posh" ]; then
+  OH_MY_POSH_VERSION="v29.17.0"
+  mkdir -p "$HOME/.local/bin"
+  curl -fL -o "$HOME/.local/bin/oh-my-posh" "https://github.com/JanDeDobbeleer/oh-my-posh/releases/download/${OH_MY_POSH_VERSION}/posh-linux-amd64"
+  chmod +x "$HOME/.local/bin/oh-my-posh"
+  echo "oh-my-posh を $HOME/.local/bin/oh-my-posh にインストールしました"
 fi

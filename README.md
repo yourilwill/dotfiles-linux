@@ -60,6 +60,8 @@ sudo make install
 - `bashrc.local` — `.bashrc`本体はデフォルトのまま維持し、これだけを追加でsourceする（diffだけをgit管理）。`LC_MESSAGES`/`LC_TIME`を`en_US.UTF-8`にし、タイムゾーン・`LANG`は`ja_JP.UTF-8`のまま、コマンド出力やdateの表示を英語化している
 - `.gitconfig` — `user.name` / `user.email` などのGit設定
 - `.config/fcitx5/config` — fcitx5の設定。右Alt(`Alt_R`)でIMEオン、左Alt(`Alt_L`)でIMEオフになるように`ActivateKeys`/`DeactivateKeys`を追加している
-- `.config/xremap/config.yml` — xremap(Karabiner相当のシステム全体キーリマッパー)の設定。ターミナル(`org.gnome.Ptyxis`)とEmacs自体を除く全アプリでEmacs風カーソル移動(C-a/e/f/b/n/p/d/h)を有効化
+- `.config/xremap/config.yml` — xremap(Karabiner相当のシステム全体キーリマッパー)の設定
+  - カーソル移動(C-a/e/f/b/n/p/d/h): ターミナル(`org.gnome.Ptyxis`)とEmacs自体を除く全アプリで有効
+  - カット(C-w)・行末まで削除(C-k): 上記に加えVS Code(`code`)も除外（Ctrl+Kから始まるチェインコマンドと衝突するため）。Chromeには適用しており、Ctrl+Wでタブは閉じず代わりにCutが送られる
 - `.config/systemd/user/xremap.service` — xremapをsystemdユーザーサービスとして自動起動するunit
 - `install.sh` — 上記のセットアップを行うスクリプト

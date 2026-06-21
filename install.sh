@@ -19,3 +19,14 @@ if ! grep -qF "$SOURCE_LINE" "$HOME/.bashrc" 2>/dev/null; then
 else
   echo "$HOME/.bashrc は既に $DOTFILES_DIR/bashrc.local を読み込み済みです"
 fi
+
+LINK_FILES=(.gitconfig)
+for file in "${LINK_FILES[@]}"; do
+  target="$HOME/$file"
+  if [ -e "$target" ] && [ ! -L "$target" ]; then
+    mv "$target" "$target.bak"
+    echo "既存の $target を $target.bak に退避しました"
+  fi
+  ln -sf "$DOTFILES_DIR/$file" "$target"
+  echo "$target -> $DOTFILES_DIR/$file"
+done

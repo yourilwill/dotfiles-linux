@@ -1,6 +1,9 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
-config.font = wezterm.font("JetBrainsMono Nerd Font Mono")
+config.font = wezterm.font_with_fallback({
+	"JetBrainsMono Nerd Font Mono",
+	"Noto Sans CJK JP",
+})
 
 return config

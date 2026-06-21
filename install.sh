@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-sudo apt update
-sudo apt install -y git curl
+MISSING=()
+for cmd in git curl; do
+  command -v "$cmd" >/dev/null 2>&1 || MISSING+=("$cmd")
+done
+if [ "${#MISSING[@]}" -gt 0 ]; then
+  sudo apt update
+  sudo apt install -y "${MISSING[@]}"
+fi
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 

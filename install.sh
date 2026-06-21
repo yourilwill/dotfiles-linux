@@ -1,7 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PACKAGES=(git curl unzip fcitx5 fcitx5-mozc fcitx5-config-qt)
+if [ ! -f /etc/apt/sources.list.d/wezterm.list ]; then
+  curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
+  echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list > /dev/null
+  sudo chmod 644 /usr/share/keyrings/wezterm-fury.gpg
+  sudo apt update
+fi
+
+PACKAGES=(git curl unzip fcitx5 fcitx5-mozc fcitx5-config-qt wezterm)
 MISSING=()
 for pkg in "${PACKAGES[@]}"; do
   dpkg -s "$pkg" >/dev/null 2>&1 || MISSING+=("$pkg")

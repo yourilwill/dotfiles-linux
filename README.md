@@ -23,7 +23,8 @@
    ```
 
    このスクリプトが以下を行う:
-   - 未インストールのパッケージ（`git`, `curl`, `unzip`, `fcitx5`, `fcitx5-mozc`, `fcitx5-config-qt`）を`apt install`
+   - WezTermの公式APTリポジトリ(apt.fury.io)を追加
+   - 未インストールのパッケージ（`git`, `curl`, `unzip`, `fcitx5`, `fcitx5-mozc`, `fcitx5-config-qt`, `wezterm`）を`apt install`
    - 入力メソッドフレームワークを`im-config`で`fcitx5`に切り替え
    - `~/.bashrc`の末尾に`bashrc.local`を読み込む設定を追加
    - `~/.gitconfig`を`.gitconfig`へのシンボリックリンクに置き換え

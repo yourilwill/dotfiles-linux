@@ -67,4 +67,5 @@ sudo make install
   - カット・コピー・ヤンク・単語削除(C_R-w/y/k, M_R-w/d, M_R-BackSpace)・C_R-xプレフィックス(h/C_R-f/C_R-s/k/C_R-c/u): 上記に加えVS Code(`code`)も除外（Ctrl+Kチェインコマンド等と衝突するため）。`C_R-y`は標準のRedo、`C_R-x`プレフィックスは右Ctrl+Xでのカットと衝突するが、いずれも右Ctrl限定。右AltはfcitxのIMEオン(`Alt_R`単体)と共存（単体押しと組み合わせ押しは別判定のため衝突しない）
   - `C-s`/`C-r`/`C-o`/`C-slash`/`C-g`単体は保存・検索・リロード等の標準動作を壊すため意図的に追加していない
 - `.config/systemd/user/xremap.service` — xremapをsystemdユーザーサービスとして自動起動するunit
+- `.config/wezterm/wezterm.lua` — WezTermの設定。フォントをJetBrainsMono Nerd Font Monoに指定
 - `install.sh` — 上記のセットアップを行うスクリプト

@@ -26,9 +26,10 @@ else
   echo "$HOME/.bashrc は既に $DOTFILES_DIR/bashrc.local を読み込み済みです"
 fi
 
-LINK_FILES=(.gitconfig)
+LINK_FILES=(.gitconfig .config/fcitx5/config)
 for file in "${LINK_FILES[@]}"; do
   target="$HOME/$file"
+  mkdir -p "$(dirname "$target")"
   if [ -e "$target" ] && [ ! -L "$target" ]; then
     mv "$target" "$target.bak"
     echo "既存の $target を $target.bak に退避しました"
@@ -36,3 +37,5 @@ for file in "${LINK_FILES[@]}"; do
   ln -sf "$DOTFILES_DIR/$file" "$target"
   echo "$target -> $DOTFILES_DIR/$file"
 done
+
+fcitx5-remote -r >/dev/null 2>&1 || true

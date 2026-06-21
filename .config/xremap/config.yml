@@ -16,18 +16,18 @@ keymap:
       C_R-f: { with_mark: Right }
       C_R-p: { with_mark: Up }
       C_R-n: { with_mark: Down }
-      # Forward/backward word (right Alt only; left Alt passes through unmodified)
-      M_R-b: { with_mark: C-Left }
-      M_R-f: { with_mark: C-Right }
+      # Forward/backward word (left Alt only; right Alt passes through unmodified)
+      M_L-b: { with_mark: C-Left }
+      M_L-f: { with_mark: C-Right }
       # Beginning/end of line
       C_R-a: { with_mark: Home }
       C_R-e: { with_mark: End }
       # Page up/down (note: overrides the standard Ctrl+V paste shortcut, right Ctrl only)
-      M_R-v: { with_mark: PageUp }
+      M_L-v: { with_mark: PageUp }
       C_R-v: { with_mark: PageDown }
       # Beginning/end of file
-      M_R-Shift-comma: { with_mark: C-Home }
-      M_R-Shift-dot: { with_mark: C-End }
+      M_L-Shift-comma: { with_mark: C-Home }
+      M_L-Shift-dot: { with_mark: C-End }
       # Newline
       C_R-m: Enter
       C_R-j: Enter
@@ -36,7 +36,7 @@ keymap:
       C_R-h: BackSpace
       # Mark (note: overrides fcitx5's secondary Ctrl+Space trigger and editor autocomplete, right Ctrl only)
       C_R-space: { set_mark: true }
-      C_R-M_R-space: [C-Shift-Right, { set_mark: true }]
+      C_R-M_L-space: [C-Shift-Right, { set_mark: true }]
 
   - name: Emacs bindings (cut/copy/yank/word-delete, except terminal/Emacs/VS Code)
     application:
@@ -48,15 +48,15 @@ keymap:
     remap:
       # Cut (right Ctrl only; overrides e.g. Chrome's tab-close since the original key never reaches the app)
       C_R-w: [C-x, { set_mark: false }]
-      # Copy (right Alt only)
-      M_R-w: [C-c, { set_mark: false }]
+      # Copy (left Alt only)
+      M_L-w: [C-c, { set_mark: false }]
       # Paste/yank (note: overrides the standard Ctrl+Y redo shortcut in many apps, right Ctrl only)
       C_R-y: [C-v, { set_mark: false }]
       # Kill line: select to end of line, then cut
       C_R-k: [Shift-End, C-x, { set_mark: false }]
-      # Delete word forward/backward (right Alt only)
-      M_R-d: [C-Delete, { set_mark: false }]
-      M_R-BackSpace: [C-BackSpace, { set_mark: false }]
+      # Delete word forward/backward (left Alt only)
+      M_L-d: [C-Delete, { set_mark: false }]
+      M_L-BackSpace: [C-BackSpace, { set_mark: false }]
       # C-x prefix, right Ctrl only (note: plain right-Ctrl+X cut no longer works unless followed by one of these; left Ctrl+X is untouched)
       C_R-x:
         remap:

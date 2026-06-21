@@ -25,11 +25,15 @@
         },
         {
           "background": "#383a59",
-          "foreground": "#ffb86c",
+          "foreground": "#50fa7b",
+          "foreground_templates": [
+            "{{ if gt .Conflicted 0 }}#ff5555{{ end }}",
+            "{{ if or .Working.Changed .Staging.Changed }}#f1fa8c{{ end }}"
+          ],
           "powerline_symbol": "\ue0b0",
           "options": {
             "branch_icon": "",
-            "fetch_status": false,
+            "fetch_status": true,
             "fetch_upstream_icon": true
           },
           "style": "powerline",

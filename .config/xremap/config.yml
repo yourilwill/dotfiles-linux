@@ -14,3 +14,16 @@ keymap:
       C-p: Up
       C-d: Delete
       C-h: BackSpace
+
+  - name: Emacs bindings (cut, except terminal/Emacs/VS Code)
+    application:
+      not:
+        - org.gnome.Ptyxis
+        - org.gnome.Terminal
+        - Emacs
+        - code
+    remap:
+      # Cut (overrides e.g. Chrome's tab-close, since the original key never reaches the app)
+      C-w: [C-x, { set_mark: false }]
+      # Kill line: select to end of line, then cut
+      C-k: [Shift-end, C-x, { set_mark: false }]

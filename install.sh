@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+PACKAGES=(git curl fcitx5 fcitx5-mozc fcitx5-config-qt)
 MISSING=()
-for cmd in git curl; do
-  command -v "$cmd" >/dev/null 2>&1 || MISSING+=("$cmd")
+for pkg in "${PACKAGES[@]}"; do
+  dpkg -s "$pkg" >/dev/null 2>&1 || MISSING+=("$pkg")
 done
 if [ "${#MISSING[@]}" -gt 0 ]; then
   sudo apt update
   sudo apt install -y "${MISSING[@]}"
+fi
+
+if ! grep -qF "run_im fcitx5" "$HOME/.xinputrc" 2>/dev/null; then
+  im-config -n fcitx5
+  echo "im-config を fcitx5 に切り替えました（反映にはログアウト/ログインが必要です）"
 fi
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

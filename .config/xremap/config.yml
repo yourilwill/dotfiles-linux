@@ -1,0 +1,16 @@
+keymap:
+  - name: Emacs bindings (global, except terminal/Emacs)
+    application:
+      not:
+        - org.gnome.Ptyxis
+        - org.gnome.Terminal
+        - Emacs
+    remap:
+      C-a: Home
+      C-e: End
+      C-f: Right
+      C-b: Left
+      C-n: Down
+      C-p: Up
+      C-d: Delete
+      C-h: BackSpace

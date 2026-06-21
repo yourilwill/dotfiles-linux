@@ -23,14 +23,22 @@
    ```
 
    このスクリプトが以下を行う:
-   - 未インストールのパッケージ（`git`, `curl`, `fcitx5`, `fcitx5-mozc`, `fcitx5-config-qt`）を`apt install`
+   - 未インストールのパッケージ（`git`, `curl`, `unzip`, `fcitx5`, `fcitx5-mozc`, `fcitx5-config-qt`）を`apt install`
    - 入力メソッドフレームワークを`im-config`で`fcitx5`に切り替え
    - `~/.bashrc`の末尾に`bashrc.local`を読み込む設定を追加
    - `~/.gitconfig`を`.gitconfig`へのシンボリックリンクに置き換え
    - `~/.config/fcitx5/config`を`.config/fcitx5/config`へのシンボリックリンクに置き換え、`fcitx5-remote -r`でリロード
    - `~/.config/autostart/org.fcitx.Fcitx5.desktop`を配置（GNOMEではfcitx5がデフォルトで自動起動エントリを持たないため、これが無いとログインしてもfcitx5が起動しない）
+   - `xremap`バイナリを`~/.local/bin/xremap`にダウンロード
+   - ユーザーを`input`グループに追加し、`/dev/uinput`用のudevルールを追加（`xremap`が`/dev/input`を読むのに必要）
+   - `xremap`のGNOME Shell拡張(`xremap@k0kubun.com`)をclone（フォーカス中のアプリ名を取得するために必要。**有効化は手動**: ログイン後に`gnome-extensions enable xremap@k0kubun.com`を実行）
+   - `~/.config/xremap/config.yml`をシンボリックリンクに置き換え、`xremap.service`をsystemdユーザーサービスとして有効化・起動
 
-4. 入力メソッドの切り替えを反映するため、一度ログアウト→ログインする
+4. 入力メソッドの切り替え、`input`グループ、GNOME Shell拡張を反映するため、一度ログアウト→ログインする。その後、初回のみ次を実行して拡張を有効化する:
+
+   ```
+   gnome-extensions enable xremap@k0kubun.com
+   ```
 
 ## Neovim（手動・ソースビルド）
 
@@ -52,4 +60,6 @@ sudo make install
 - `bashrc.local` — `.bashrc`本体はデフォルトのまま維持し、これだけを追加でsourceする（diffだけをgit管理）。`LC_MESSAGES`/`LC_TIME`を`en_US.UTF-8`にし、タイムゾーン・`LANG`は`ja_JP.UTF-8`のまま、コマンド出力やdateの表示を英語化している
 - `.gitconfig` — `user.name` / `user.email` などのGit設定
 - `.config/fcitx5/config` — fcitx5の設定。右Alt(`Alt_R`)でIMEオン、左Alt(`Alt_L`)でIMEオフになるように`ActivateKeys`/`DeactivateKeys`を追加している
+- `.config/xremap/config.yml` — xremap(Karabiner相当のシステム全体キーリマッパー)の設定。ターミナル(`org.gnome.Ptyxis`)とEmacs自体を除く全アプリでEmacs風カーソル移動(C-a/e/f/b/n/p/d/h)を有効化
+- `.config/systemd/user/xremap.service` — xremapをsystemdユーザーサービスとして自動起動するunit
 - `install.sh` — 上記のセットアップを行うスクリプト

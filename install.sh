@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PACKAGES=(git curl fcitx5 fcitx5-mozc fcitx5-config-qt)
+PACKAGES=(git curl unzip fcitx5 fcitx5-mozc fcitx5-config-qt)
 MISSING=()
 for pkg in "${PACKAGES[@]}"; do
   dpkg -s "$pkg" >/dev/null 2>&1 || MISSING+=("$pkg")
@@ -26,7 +26,7 @@ else
   echo "$HOME/.bashrc は既に $DOTFILES_DIR/bashrc.local を読み込み済みです"
 fi
 
-LINK_FILES=(.gitconfig .config/fcitx5/config)
+LINK_FILES=(.gitconfig .config/fcitx5/config .config/xremap/config.yml .config/systemd/user/xremap.service)
 for file in "${LINK_FILES[@]}"; do
   target="$HOME/$file"
   mkdir -p "$(dirname "$target")"
@@ -42,3 +42,35 @@ mkdir -p "$HOME/.config/autostart"
 cp /usr/share/applications/org.fcitx.Fcitx5.desktop "$HOME/.config/autostart/org.fcitx.Fcitx5.desktop"
 
 fcitx5-remote -r >/dev/null 2>&1 || true
+
+# xremap: system-wide key remapper (Emacs-style bindings)
+if [ ! -x "$HOME/.local/bin/xremap" ]; then
+  XREMAP_VERSION="v0.15.8"
+  TMP_ZIP="$(mktemp --suffix=.zip)"
+  curl -fL -o "$TMP_ZIP" "https://github.com/xremap/xremap/releases/download/${XREMAP_VERSION}/xremap-linux-x86_64-gnome.zip"
+  mkdir -p "$HOME/.local/bin"
+  unzip -o "$TMP_ZIP" -d "$HOME/.local/bin" >/dev/null
+  chmod +x "$HOME/.local/bin/xremap"
+  rm -f "$TMP_ZIP"
+  echo "xremap を $HOME/.local/bin/xremap にインストールしました"
+fi
+
+if ! getent group input | grep -q "\b$USER\b"; then
+  sudo usermod -aG input "$USER"
+  echo "$USER を input グループに追加しました（反映にはログアウト/ログインが必要です）"
+fi
+
+if [ ! -f /etc/udev/rules.d/99-input.rules ]; then
+  echo 'KERNEL=="uinput", GROUP="input", MODE="0660"' | sudo tee /etc/udev/rules.d/99-input.rules > /dev/null
+  sudo udevadm control --reload-rules
+  sudo udevadm trigger
+fi
+
+if [ ! -d "$HOME/.local/share/gnome-shell/extensions/xremap@k0kubun.com" ]; then
+  mkdir -p "$HOME/.local/share/gnome-shell/extensions"
+  git clone https://github.com/xremap/xremap-gnome "$HOME/.local/share/gnome-shell/extensions/xremap@k0kubun.com"
+  echo "xremap の GNOME Shell拡張をインストールしました。ログアウト/ログイン後に 'gnome-extensions enable xremap@k0kubun.com' を実行してください"
+fi
+
+systemctl --user daemon-reload
+systemctl --user enable --now xremap.service 2>&1 || echo "xremap.service の起動に失敗しました（input グループの反映にログアウト/ログインが必要な場合があります）"

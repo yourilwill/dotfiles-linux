@@ -31,6 +31,21 @@
 
 4. 入力メソッドの切り替えを反映するため、一度ログアウト→ログインする
 
+## Neovim（手動・ソースビルド）
+
+`install.sh`には含めず、必要なときにその場で手動ビルドする方針（クリーンインストール毎の自動ビルドはコストが高いため）。stableブランチをビルドする手順:
+
+```
+sudo apt update && sudo apt install -y ninja-build gettext cmake unzip curl build-essential
+git clone https://github.com/neovim/neovim.git ~/src/neovim
+cd ~/src/neovim
+git checkout stable
+make CMAKE_BUILD_TYPE=RelWithDebInfo
+sudo make install
+```
+
+更新したい場合は`~/src/neovim`で`git pull`してから`make`し直す。
+
 ## 管理しているファイル
 
 - `bashrc.local` — `.bashrc`本体はデフォルトのまま維持し、これだけを追加でsourceする（diffだけをgit管理）。`LC_MESSAGES`/`LC_TIME`を`en_US.UTF-8`にし、タイムゾーン・`LANG`は`ja_JP.UTF-8`のまま、コマンド出力やdateの表示を英語化している

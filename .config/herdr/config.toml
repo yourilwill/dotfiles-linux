@@ -10,3 +10,6 @@ focus_pane_down = "alt+j"
 focus_pane_up = "alt+k"
 focus_pane_right = "alt+l"
 split_vertical = "prefix+\\"
+
+[ui.sound]
+enabled = false

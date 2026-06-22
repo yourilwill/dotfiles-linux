@@ -41,11 +41,13 @@
    - `~/.config/rofi/config.rasi`・`~/.config/rofi/themes/alfred-dracula.rasi`をそれぞれシンボリックリンクに置き換え
    - GNOMEのカスタムショートカット(`Super+R`)で`rofi -show drun -normal-window`を起動するよう`gsettings`で設定（`-normal-window`が無いとMutter/XWayland環境でESC・文字入力が効かない）
    - `~/.config/fcitx5/resume-restart.sh`・`~/.config/systemd/user/fcitx5-resume-restart.service`をシンボリックリンクに置き換え、`fcitx5-resume-restart.service`をsystemdユーザーサービスとして有効化・起動
+   - `Toggler`のGNOME Shell拡張(`toggler@hedgie.tech`)をclone・schemaをコンパイルし、`Ctrl+Alt+I`でWezTermをフォーカス/最小化トグルするよう`gsettings`で設定（**有効化は手動**: ログイン後に`gnome-extensions enable toggler@hedgie.tech`を実行）
 
 4. 入力メソッドの切り替え、`input`グループ、GNOME Shell拡張を反映するため、一度ログアウト→ログインする。その後、初回のみ次を実行して拡張を有効化する:
 
    ```
    gnome-extensions enable xremap@k0kubun.com
+   gnome-extensions enable toggler@hedgie.tech
    ```
 
 ## Neovim（手動・ソースビルド）
@@ -79,4 +81,5 @@ sudo make install
 - `.config/herdr/config.toml` — herdrの設定。ペイン移動(`focus_pane_left/down/up/right`)をAlt+h/j/k/lに直接バインド（vimの方向キーと同じ並び）
 - `.config/oh-my-posh/dracula.omp.json` — bashプロンプト(`oh-my-posh`)用の公式Draculaテーマ（オリジナルは[oh-my-posh本体のthemesディレクトリ](https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/dracula.omp.json)）
 - `.config/rofi/config.rasi` / `.config/rofi/themes/alfred-dracula.rasi` — ランチャー`rofi`の設定。中央配置・角丸・半透明のDracula配色でmacOSのAlfredに寄せた自作テーマ。`Super+R`(`install.sh`がGNOMEカスタムショートカットとして設定)で`drun`モードを起動
+- `Toggler`拡張 — WezTermはネイティブWaylandクライアントのため`wmctrl`等のX11ツールでは制御できない。GNOME Shell拡張[Toggler](https://github.com/hedgieinsocks/gnome-extension-toggler)を使い、`Ctrl+Alt+I`でWezTermウィンドウのフォーカス/最小化をトグル（`install.sh`が`terminal-id`をWezTerm(`org.wezfurlong.wezterm.desktop`)に設定）
 - `install.sh` — 上記のセットアップを行うスクリプト

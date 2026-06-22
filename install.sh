@@ -115,3 +115,16 @@ gsettings set "org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:$R
 gsettings set "org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:$ROFI_CUSTOM_PATH" command "$ROFI_COMMAND"
 gsettings set "org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:$ROFI_CUSTOM_PATH" binding "<Super>r"
 echo "Super+R で rofi が起動するように設定しました"
+
+# Toggler: GNOME extension to minimize/restore WezTerm on Ctrl+Alt+I
+# (focus when minimized/unfocused, minimize when already focused)
+if [ ! -d "$HOME/.local/share/gnome-shell/extensions/toggler@hedgie.tech" ]; then
+  git clone https://github.com/hedgieinsocks/gnome-extension-toggler "$HOME/.local/share/gnome-shell/extensions/toggler@hedgie.tech"
+  echo "Toggler の GNOME Shell拡張をインストールしました。ログアウト/ログイン後に 'gnome-extensions enable toggler@hedgie.tech' を実行してください"
+fi
+glib-compile-schemas "$HOME/.local/share/gnome-shell/extensions/toggler@hedgie.tech/schemas"
+TOGGLER_SCHEMA_DIR="$HOME/.local/share/gnome-shell/extensions/toggler@hedgie.tech/schemas"
+GSETTINGS_SCHEMA_DIR="$TOGGLER_SCHEMA_DIR" gsettings set org.gnome.shell.extensions.toggler terminal-id "org.wezfurlong.wezterm.desktop"
+GSETTINGS_SCHEMA_DIR="$TOGGLER_SCHEMA_DIR" gsettings set org.gnome.shell.extensions.toggler terminal-shortcut "['<Ctrl><Alt>i']"
+GSETTINGS_SCHEMA_DIR="$TOGGLER_SCHEMA_DIR" gsettings set org.gnome.shell.extensions.toggler terminal-shortcut-text "<Ctrl><Alt>i"
+echo "Ctrl+Alt+I で WezTerm をトグル表示できるように設定しました"

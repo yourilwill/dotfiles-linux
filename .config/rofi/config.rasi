@@ -1,0 +1,6 @@
+configuration {
+    modes: "drun";
+    show-icons: true;
+}
+
+@theme "themes/alfred-dracula.rasi"

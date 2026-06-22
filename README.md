@@ -24,7 +24,7 @@
 
    このスクリプトが以下を行う:
    - WezTermの公式APTリポジトリ(apt.fury.io)を追加
-   - 未インストールのパッケージ（`git`, `curl`, `unzip`, `fcitx5`, `fcitx5-mozc`, `fcitx5-config-qt`, `wezterm-nightly`）を`apt install`（`wezterm`安定版は2024年2月のビルドで止まっており、GNOME WaylandでBroken pipeクラッシュするため`wezterm-nightly`を使用）
+   - 未インストールのパッケージ（`git`, `curl`, `unzip`, `fcitx5`, `fcitx5-mozc`, `fcitx5-config-qt`, `wezterm-nightly`, `rofi`）を`apt install`（`wezterm`安定版は2024年2月のビルドで止まっており、GNOME WaylandでBroken pipeクラッシュするため`wezterm-nightly`を使用）
    - 入力メソッドフレームワークを`im-config`で`fcitx5`に切り替え
    - `~/.bashrc`の末尾に`bashrc.local`を読み込む設定を追加
    - `~/.gitconfig`を`.gitconfig`へのシンボリックリンクに置き換え
@@ -38,6 +38,8 @@
    - `~/.config/herdr/config.toml`を`.config/herdr/config.toml`へのシンボリックリンクに置き換え
    - [oh-my-posh](https://ohmyposh.dev/)バイナリを`~/.local/bin/oh-my-posh`にダウンロード（bashプロンプトに使用、`bashrc.local`で読み込み）
    - `~/.config/oh-my-posh/dracula.omp.json`を`.config/oh-my-posh/dracula.omp.json`へのシンボリックリンクに置き換え
+   - `~/.config/rofi/config.rasi`・`~/.config/rofi/themes/alfred-dracula.rasi`をそれぞれシンボリックリンクに置き換え
+   - GNOMEのカスタムショートカット(`Super+R`)で`rofi -show drun -normal-window`を起動するよう`gsettings`で設定（`-normal-window`が無いとMutter/XWayland環境でESC・文字入力が効かない）
 
 4. 入力メソッドの切り替え、`input`グループ、GNOME Shell拡張を反映するため、一度ログアウト→ログインする。その後、初回のみ次を実行して拡張を有効化する:
 
@@ -74,4 +76,5 @@ sudo make install
 - `.config/wezterm/wezterm.lua` — WezTermの設定。カラースキームを`Dracula (Gogh)`、フォントをJetBrainsMono Nerd Font Monoに指定
 - `.config/herdr/config.toml` — herdrの設定。ペイン移動(`focus_pane_left/down/up/right`)をAlt+h/j/k/lに直接バインド（vimの方向キーと同じ並び）
 - `.config/oh-my-posh/dracula.omp.json` — bashプロンプト(`oh-my-posh`)用の公式Draculaテーマ（オリジナルは[oh-my-posh本体のthemesディレクトリ](https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/dracula.omp.json)）
+- `.config/rofi/config.rasi` / `.config/rofi/themes/alfred-dracula.rasi` — ランチャー`rofi`の設定。中央配置・角丸・半透明のDracula配色でmacOSのAlfredに寄せた自作テーマ。`Super+R`(`install.sh`がGNOMEカスタムショートカットとして設定)で`drun`モードを起動
 - `install.sh` — 上記のセットアップを行うスクリプト

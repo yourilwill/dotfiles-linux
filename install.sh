@@ -8,7 +8,7 @@ if [ ! -f /etc/apt/sources.list.d/wezterm.list ]; then
   sudo apt update
 fi
 
-PACKAGES=(git curl unzip fcitx5 fcitx5-mozc fcitx5-config-qt wezterm-nightly)
+PACKAGES=(git curl unzip fcitx5 fcitx5-mozc fcitx5-config-qt wezterm-nightly rofi)
 MISSING=()
 for pkg in "${PACKAGES[@]}"; do
   dpkg -s "$pkg" >/dev/null 2>&1 || MISSING+=("$pkg")
@@ -33,7 +33,7 @@ else
   echo "$HOME/.bashrc は既に $DOTFILES_DIR/bashrc.local を読み込み済みです"
 fi
 
-LINK_FILES=(.gitconfig .config/fcitx5/config .config/xremap/config.yml .config/systemd/user/xremap.service .config/wezterm/wezterm.lua .config/herdr/config.toml .config/oh-my-posh/dracula.omp.json)
+LINK_FILES=(.gitconfig .config/fcitx5/config .config/xremap/config.yml .config/systemd/user/xremap.service .config/wezterm/wezterm.lua .config/herdr/config.toml .config/oh-my-posh/dracula.omp.json .config/rofi/config.rasi .config/rofi/themes/alfred-dracula.rasi)
 for file in "${LINK_FILES[@]}"; do
   target="$HOME/$file"
   mkdir -p "$(dirname "$target")"
@@ -94,3 +94,23 @@ if [ ! -x "$HOME/.local/bin/oh-my-posh" ]; then
   chmod +x "$HOME/.local/bin/oh-my-posh"
   echo "oh-my-posh を $HOME/.local/bin/oh-my-posh にインストールしました"
 fi
+
+# rofi: launcher on Super+R via GNOME custom keybinding
+# -normal-window is required: plain override-redirect popups don't reliably
+# receive keyboard focus from Mutter/XWayland, so ESC/typing silently fail.
+ROFI_CUSTOM_PATH="/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/rofi/"
+ROFI_COMMAND="env -u WAYLAND_DISPLAY DISPLAY=:0 rofi -show drun -normal-window"
+EXISTING_KEYBINDINGS="$(gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings)"
+if [[ "$EXISTING_KEYBINDINGS" != *"$ROFI_CUSTOM_PATH"* ]]; then
+  if [ "$EXISTING_KEYBINDINGS" = "@as []" ]; then
+    NEW_KEYBINDINGS="['$ROFI_CUSTOM_PATH']"
+  else
+    NEW_KEYBINDINGS="${EXISTING_KEYBINDINGS%]}, '$ROFI_CUSTOM_PATH']"
+  fi
+  gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "$NEW_KEYBINDINGS"
+  echo "rofi 用のキーバインドエントリを追加しました"
+fi
+gsettings set "org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:$ROFI_CUSTOM_PATH" name "rofi launcher"
+gsettings set "org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:$ROFI_CUSTOM_PATH" command "$ROFI_COMMAND"
+gsettings set "org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:$ROFI_CUSTOM_PATH" binding "<Super>r"
+echo "Super+R で rofi が起動するように設定しました"

@@ -40,6 +40,7 @@
    - `~/.config/oh-my-posh/dracula.omp.json`を`.config/oh-my-posh/dracula.omp.json`へのシンボリックリンクに置き換え
    - `~/.config/rofi/config.rasi`・`~/.config/rofi/themes/alfred-dracula.rasi`をそれぞれシンボリックリンクに置き換え
    - GNOMEのカスタムショートカット(`Super+R`)で`rofi -show drun -normal-window`を起動するよう`gsettings`で設定（`-normal-window`が無いとMutter/XWayland環境でESC・文字入力が効かない）
+   - `~/.config/fcitx5/resume-restart.sh`・`~/.config/systemd/user/fcitx5-resume-restart.service`をシンボリックリンクに置き換え、`fcitx5-resume-restart.service`をsystemdユーザーサービスとして有効化・起動
 
 4. 入力メソッドの切り替え、`input`グループ、GNOME Shell拡張を反映するため、一度ログアウト→ログインする。その後、初回のみ次を実行して拡張を有効化する:
 
@@ -67,6 +68,7 @@ sudo make install
 - `bashrc.local` — `.bashrc`本体はデフォルトのまま維持し、これだけを追加でsourceする（diffだけをgit管理）。`LC_MESSAGES`/`LC_TIME`を`en_US.UTF-8`にし、タイムゾーン・`LANG`は`ja_JP.UTF-8`のまま、コマンド出力やdateの表示を英語化している。エイリアス`h=herdr`/`g=git`、`oh-my-posh`によるpowerline風プロンプトの設定も含む（Nerd Font前提）
 - `.gitconfig` — `user.name` / `user.email` などのGit設定
 - `.config/fcitx5/config` — fcitx5の設定。右Alt(`Alt_R`)でIMEオン、左Alt(`Alt_L`)でIMEオフになるように`ActivateKeys`/`DeactivateKeys`を追加している
+- `.config/fcitx5/resume-restart.sh` / `.config/systemd/user/fcitx5-resume-restart.service` — スリープ復帰後にfcitx5を自動で`fcitx5 -r`再起動するsystemdユーザーサービス。fcitx5のAlt単体トリガーはXWayland経由のX11キーグラブに依存しており、スリープ復帰後にこのグラブだけが失効し、トリガーキーが反応しなくなる既知の不具合がある（これまでは手動でトレイメニューから再起動していた）。`systemd-logind`の`PrepareForSleep`信号(`gdbus monitor`で監視)を使って復帰を検出している
 - `.config/xremap/config.yml` — xremap(Karabiner相当のシステム全体キーリマッパー)の設定。[公式のemacs.yml例](https://github.com/xremap/xremap/blob/master/example/emacs.yml)をベースに、**右Ctrl(`C_R`)・左Alt(`M_L`)のみ**でEmacsバインドを発動し、左Ctrl・右Altは標準動作のまま通過させる（右Altはfcitx5のIMEオン用キーとして使うため、あえて標準Altのまま）
   - `modmap`でCapsLockを右Ctrl(`Control_R`)に変換（CapsLockのオン/オフ機能は無効化され、右Ctrlとして動作。Emacsバインドも発動する）
   - カーソル移動・マーク(C_R-a/e/f/b/n/p/d/h/v/space, M_L-b/f/v, M_L-Shift-,/.): ターミナル(`org.gnome.Ptyxis`)・WezTerm(`org.wezfurlong.wezterm`)とEmacs自体を除く全アプリで有効。`C_R-v`は標準の貼り付け、`C_R-space`はfcitx5の予備トリガー/エディタの自動補完と衝突するが右Ctrl限定なので影響は小さい。WezTermを除外しているのはherdrのペイン移動(Alt+h/j/k/l)等、左Alt系のターミナル内ショートカットと衝突させないため

@@ -33,7 +33,7 @@ else
   echo "$HOME/.bashrc は既に $DOTFILES_DIR/bashrc.local を読み込み済みです"
 fi
 
-LINK_FILES=(.gitconfig .config/fcitx5/config .config/xremap/config.yml .config/systemd/user/xremap.service .config/wezterm/wezterm.lua .config/herdr/config.toml .config/oh-my-posh/dracula.omp.json .config/rofi/config.rasi .config/rofi/themes/alfred-dracula.rasi)
+LINK_FILES=(.gitconfig .config/fcitx5/config .config/fcitx5/resume-restart.sh .config/xremap/config.yml .config/systemd/user/xremap.service .config/systemd/user/fcitx5-resume-restart.service .config/wezterm/wezterm.lua .config/herdr/config.toml .config/oh-my-posh/dracula.omp.json .config/rofi/config.rasi .config/rofi/themes/alfred-dracula.rasi)
 for file in "${LINK_FILES[@]}"; do
   target="$HOME/$file"
   mkdir -p "$(dirname "$target")"
@@ -81,6 +81,7 @@ fi
 
 systemctl --user daemon-reload
 systemctl --user enable --now xremap.service 2>&1 || echo "xremap.service の起動に失敗しました（input グループの反映にログアウト/ログインが必要な場合があります）"
+systemctl --user enable --now fcitx5-resume-restart.service
 
 if [ ! -x "$HOME/.local/bin/herdr" ]; then
   curl -fsSL https://herdr.dev/install.sh | sh

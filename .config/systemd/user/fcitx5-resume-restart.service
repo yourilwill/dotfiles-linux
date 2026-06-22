@@ -1,0 +1,10 @@
+[Unit]
+Description=Restart fcitx5 after resume from suspend (works around stale XWayland Alt key grab)
+
+[Service]
+ExecStart=%h/.config/fcitx5/resume-restart.sh
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=default.target

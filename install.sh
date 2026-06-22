@@ -8,7 +8,7 @@ if [ ! -f /etc/apt/sources.list.d/wezterm.list ]; then
   sudo apt update
 fi
 
-PACKAGES=(git curl unzip fcitx5 fcitx5-mozc fcitx5-config-qt wezterm-nightly rofi)
+PACKAGES=(git curl unzip fcitx5 fcitx5-mozc fcitx5-config-qt wezterm-nightly rofi fzf)
 MISSING=()
 for pkg in "${PACKAGES[@]}"; do
   dpkg -s "$pkg" >/dev/null 2>&1 || MISSING+=("$pkg")
@@ -85,6 +85,18 @@ systemctl --user enable --now fcitx5-resume-restart.service
 
 if [ ! -x "$HOME/.local/bin/herdr" ]; then
   curl -fsSL https://herdr.dev/install.sh | sh
+fi
+
+# ghq: manage git repositories under a common root (used with fzf, Ctrl-g)
+if [ ! -x "$HOME/.local/bin/ghq" ]; then
+  GHQ_VERSION="v1.10.1"
+  TMP_ZIP="$(mktemp --suffix=.zip)"
+  curl -fL -o "$TMP_ZIP" "https://github.com/x-motemen/ghq/releases/download/${GHQ_VERSION}/ghq_linux_amd64.zip"
+  mkdir -p "$HOME/.local/bin"
+  unzip -p "$TMP_ZIP" ghq_linux_amd64/ghq > "$HOME/.local/bin/ghq"
+  chmod +x "$HOME/.local/bin/ghq"
+  rm -f "$TMP_ZIP"
+  echo "ghq を $HOME/.local/bin/ghq にインストールしました"
 fi
 
 # oh-my-posh: bash prompt (Dracula theme)

@@ -13,8 +13,8 @@
           "type": "session"
         },
         {
-          "background": "#282a36",
-          "foreground": "#bd93f9",
+          "background": "#bd93f9",
+          "foreground": "#282a36",
           "powerline_symbol": "\ue0b0",
           "options": {
             "style": "letter"
@@ -24,12 +24,12 @@
           "type": "path"
         },
         {
-          "background": "#383a59",
-          "foreground": "#50fa7b",
-          "foreground_templates": [
+          "background": "#50fa7b",
+          "background_templates": [
             "{{ if gt .Conflicted 0 }}#ff5555{{ end }}",
             "{{ if or .Working.Changed .Staging.Changed }}#f1fa8c{{ end }}"
           ],
+          "foreground": "#282a36",
           "powerline_symbol": "\ue0b0",
           "options": {
             "branch_icon": "",

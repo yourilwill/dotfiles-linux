@@ -37,7 +37,7 @@ else
   echo "$HOME/.bashrc は既に $DOTFILES_DIR/bashrc.local を読み込み済みです"
 fi
 
-LINK_FILES=(.gitconfig .config/fcitx5/config .config/fcitx5/resume-restart.sh .config/xremap/config.yml .config/systemd/user/xremap.service .config/systemd/user/fcitx5-resume-restart.service .config/wezterm/wezterm.lua .config/herdr/config.toml .config/oh-my-posh/dracula.omp.json .config/rofi/config.rasi .config/rofi/themes/alfred-dracula.rasi .config/yazi/theme.toml .config/yazi/package.toml .config/yazi/init.lua .config/yazi/keymap.toml)
+LINK_FILES=(.gitconfig .config/fcitx5/config .config/fcitx5/resume-restart.sh .config/xremap/config.yml .config/systemd/user/xremap.service .config/systemd/user/fcitx5-resume-restart.service .config/wezterm/wezterm.lua .config/herdr/config.toml .config/oh-my-posh/catppuccin-mocha.omp.json .config/rofi/config.rasi .config/rofi/themes/alfred-catppuccin-mocha.rasi .config/yazi/theme.toml .config/yazi/package.toml .config/yazi/init.lua .config/yazi/keymap.toml)
 for file in "${LINK_FILES[@]}"; do
   target="$HOME/$file"
   mkdir -p "$(dirname "$target")"
@@ -49,7 +49,7 @@ for file in "${LINK_FILES[@]}"; do
   echo "$target -> $DOTFILES_DIR/$file"
 done
 
-# yazi: restore flavors (e.g. Dracula) locked in package.toml
+# yazi: restore flavors (e.g. Catppuccin Mocha) locked in package.toml
 if command -v ya >/dev/null 2>&1; then
   ya pkg install
 fi
@@ -108,7 +108,7 @@ if [ ! -x "$HOME/.local/bin/ghq" ]; then
   echo "ghq を $HOME/.local/bin/ghq にインストールしました"
 fi
 
-# oh-my-posh: bash prompt (Dracula theme)
+# oh-my-posh: bash prompt (Catppuccin Mocha theme)
 if [ ! -x "$HOME/.local/bin/oh-my-posh" ]; then
   OH_MY_POSH_VERSION="v29.17.0"
   mkdir -p "$HOME/.local/bin"

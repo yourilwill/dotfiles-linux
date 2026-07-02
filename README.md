@@ -37,8 +37,8 @@
    - [herdr](https://herdr.dev/)を公式インストールスクリプトで`~/.local/bin/herdr`にインストール
    - `~/.config/herdr/config.toml`を`.config/herdr/config.toml`へのシンボリックリンクに置き換え
    - [oh-my-posh](https://ohmyposh.dev/)バイナリを`~/.local/bin/oh-my-posh`にダウンロード（bashプロンプトに使用、`bashrc.local`で読み込み）
-   - `~/.config/oh-my-posh/dracula.omp.json`を`.config/oh-my-posh/dracula.omp.json`へのシンボリックリンクに置き換え
-   - `~/.config/rofi/config.rasi`・`~/.config/rofi/themes/alfred-dracula.rasi`をそれぞれシンボリックリンクに置き換え
+   - `~/.config/oh-my-posh/catppuccin-mocha.omp.json`を`.config/oh-my-posh/catppuccin-mocha.omp.json`へのシンボリックリンクに置き換え
+   - `~/.config/rofi/config.rasi`・`~/.config/rofi/themes/alfred-catppuccin-mocha.rasi`をそれぞれシンボリックリンクに置き換え
    - GNOMEのカスタムショートカット(`Super+R`)で`rofi -show drun -normal-window`を起動するよう`gsettings`で設定（`-normal-window`が無いとMutter/XWayland環境でESC・文字入力が効かない）
    - `~/.config/fcitx5/resume-restart.sh`・`~/.config/systemd/user/fcitx5-resume-restart.service`をシンボリックリンクに置き換え、`fcitx5-resume-restart.service`をsystemdユーザーサービスとして有効化・起動
    - `Toggler`のGNOME Shell拡張(`toggler@hedgie.tech`)をclone・schemaをコンパイルし、`Ctrl+Alt+I`でWezTermをフォーカス/最小化トグルするよう`gsettings`で設定（**有効化は手動**: ログイン後に`gnome-extensions enable toggler@hedgie.tech`を実行）
@@ -77,9 +77,9 @@ sudo make install
   - カット・コピー・ヤンク・単語削除(C_R-w/y/k, M_L-w/d, M_L-BackSpace)・C_R-xプレフィックス(h/C_R-f/C_R-s/k/C_R-c/u): 上記に加えVS Code(`code`)も除外（Ctrl+Kチェインコマンド等と衝突するため）。`C_R-y`は標準のRedo、`C_R-x`プレフィックスは右Ctrl+Xでのカットと衝突するが、いずれも右Ctrl限定。左AltはfcitxのIMEオフ(`Alt_L`単体)と共存（単体押しと組み合わせ押しは別判定のため衝突しない）
   - `C-s`/`C-r`/`C-o`/`C-slash`/`C-g`単体は保存・検索・リロード等の標準動作を壊すため意図的に追加していない
 - `.config/systemd/user/xremap.service` — xremapをsystemdユーザーサービスとして自動起動するunit
-- `.config/wezterm/wezterm.lua` — WezTermの設定。カラースキームを`Dracula (Gogh)`、フォントをJetBrainsMono Nerd Font Monoに指定
+- `.config/wezterm/wezterm.lua` — WezTermの設定。カラースキームを`Catppuccin Mocha`、フォントをJetBrainsMono Nerd Font Monoに指定
 - `.config/herdr/config.toml` — herdrの設定。ペイン移動(`focus_pane_left/down/up/right`)をAlt+h/j/k/lに直接バインド（vimの方向キーと同じ並び）
-- `.config/oh-my-posh/dracula.omp.json` — bashプロンプト(`oh-my-posh`)用の公式Draculaテーマ（オリジナルは[oh-my-posh本体のthemesディレクトリ](https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/dracula.omp.json)）
-- `.config/rofi/config.rasi` / `.config/rofi/themes/alfred-dracula.rasi` — ランチャー`rofi`の設定。中央配置・角丸・半透明のDracula配色でmacOSのAlfredに寄せた自作テーマ。`Super+R`(`install.sh`がGNOMEカスタムショートカットとして設定)で`drun`モードを起動
+- `.config/oh-my-posh/catppuccin-mocha.omp.json` — bashプロンプト(`oh-my-posh`)用のテーマ。[oh-my-posh公式のDraculaテーマ](https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/dracula.omp.json)をベースにsession/path/git/node/awsセグメントをカスタマイズした上で、配色をCatppuccin Mocha公式パレットに置き換えた自作版
+- `.config/rofi/config.rasi` / `.config/rofi/themes/alfred-catppuccin-mocha.rasi` — ランチャー`rofi`の設定。中央配置・角丸・半透明のCatppuccin Mocha配色でmacOSのAlfredに寄せた自作テーマ。`Super+R`(`install.sh`がGNOMEカスタムショートカットとして設定)で`drun`モードを起動
 - `Toggler`拡張 — WezTermはネイティブWaylandクライアントのため`wmctrl`等のX11ツールでは制御できない。GNOME Shell拡張[Toggler](https://github.com/hedgieinsocks/gnome-extension-toggler)を使い、`Ctrl+Alt+I`でWezTermウィンドウのフォーカス/最小化をトグル（`install.sh`が`terminal-id`をWezTerm(`org.wezfurlong.wezterm.desktop`)に設定）
 - `install.sh` — 上記のセットアップを行うスクリプト

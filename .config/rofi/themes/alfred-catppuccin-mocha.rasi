@@ -1,12 +1,12 @@
-/* Alfred-style centered launcher, colored with the Dracula palette */
+/* Alfred-style centered launcher, colored with the Catppuccin Mocha palette */
 
 * {
-    bg:        #282a36ee;
-    bg-alt:    #383a59ee;
-    bg-sel:    #bd93f9;
-    fg:        #f8f8f2;
-    fg-sel:    #282a36;
-    fg-muted:  #6272a4;
+    bg:        #1e1e2eee;
+    bg-alt:    #45475aee;
+    bg-sel:    #cba6f7;
+    fg:        #cdd6f4;
+    fg-sel:    #1e1e2e;
+    fg-muted:  #6c7086;
 
     background-color: transparent;
     text-color:        @fg;

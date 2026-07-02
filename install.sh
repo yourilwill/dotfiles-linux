@@ -8,7 +8,7 @@ if [ ! -f /etc/apt/sources.list.d/wezterm.list ]; then
   sudo apt update
 fi
 
-PACKAGES=(git curl unzip fcitx5 fcitx5-mozc fcitx5-config-qt wezterm-nightly rofi fzf fd-find zoxide)
+PACKAGES=(git curl unzip fcitx5 fcitx5-mozc fcitx5-config-qt wezterm-nightly rofi fzf fd-find zoxide ripgrep)
 MISSING=()
 for pkg in "${PACKAGES[@]}"; do
   dpkg -s "$pkg" >/dev/null 2>&1 || MISSING+=("$pkg")

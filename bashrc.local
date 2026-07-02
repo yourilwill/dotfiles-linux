@@ -32,6 +32,9 @@ function y() {
   rm -f -- "$tmp"
 }
 
+# zoxide
+eval "$(zoxide init bash)"
+
 # asdf
 . "$HOME/.asdf/asdf.sh"
 . "$HOME/.asdf/internal/completions/asdf.bash"

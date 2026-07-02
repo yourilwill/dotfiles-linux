@@ -8,7 +8,7 @@ if [ ! -f /etc/apt/sources.list.d/wezterm.list ]; then
   sudo apt update
 fi
 
-PACKAGES=(git curl unzip fcitx5 fcitx5-mozc fcitx5-config-qt wezterm-nightly rofi fzf)
+PACKAGES=(git curl unzip fcitx5 fcitx5-mozc fcitx5-config-qt wezterm-nightly rofi fzf fd-find zoxide)
 MISSING=()
 for pkg in "${PACKAGES[@]}"; do
   dpkg -s "$pkg" >/dev/null 2>&1 || MISSING+=("$pkg")
@@ -17,6 +17,10 @@ if [ "${#MISSING[@]}" -gt 0 ]; then
   sudo apt update
   sudo apt install -y "${MISSING[@]}"
 fi
+
+# fd-find installs its binary as `fdfind` on Ubuntu; expose it as `fd`
+mkdir -p "$HOME/.local/bin"
+ln -sf "$(command -v fdfind)" "$HOME/.local/bin/fd"
 
 if ! grep -qF "run_im fcitx5" "$HOME/.xinputrc" 2>/dev/null; then
   im-config -n fcitx5
@@ -33,7 +37,7 @@ else
   echo "$HOME/.bashrc は既に $DOTFILES_DIR/bashrc.local を読み込み済みです"
 fi
 
-LINK_FILES=(.gitconfig .config/fcitx5/config .config/fcitx5/resume-restart.sh .config/xremap/config.yml .config/systemd/user/xremap.service .config/systemd/user/fcitx5-resume-restart.service .config/wezterm/wezterm.lua .config/herdr/config.toml .config/oh-my-posh/dracula.omp.json .config/rofi/config.rasi .config/rofi/themes/alfred-dracula.rasi .config/yazi/theme.toml .config/yazi/package.toml)
+LINK_FILES=(.gitconfig .config/fcitx5/config .config/fcitx5/resume-restart.sh .config/xremap/config.yml .config/systemd/user/xremap.service .config/systemd/user/fcitx5-resume-restart.service .config/wezterm/wezterm.lua .config/herdr/config.toml .config/oh-my-posh/dracula.omp.json .config/rofi/config.rasi .config/rofi/themes/alfred-dracula.rasi .config/yazi/theme.toml .config/yazi/package.toml .config/yazi/init.lua .config/yazi/keymap.toml)
 for file in "${LINK_FILES[@]}"; do
   target="$HOME/$file"
   mkdir -p "$(dirname "$target")"

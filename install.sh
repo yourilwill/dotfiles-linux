@@ -33,7 +33,7 @@ else
   echo "$HOME/.bashrc は既に $DOTFILES_DIR/bashrc.local を読み込み済みです"
 fi
 
-LINK_FILES=(.gitconfig .config/fcitx5/config .config/fcitx5/resume-restart.sh .config/xremap/config.yml .config/systemd/user/xremap.service .config/systemd/user/fcitx5-resume-restart.service .config/wezterm/wezterm.lua .config/herdr/config.toml .config/oh-my-posh/dracula.omp.json .config/rofi/config.rasi .config/rofi/themes/alfred-dracula.rasi)
+LINK_FILES=(.gitconfig .config/fcitx5/config .config/fcitx5/resume-restart.sh .config/xremap/config.yml .config/systemd/user/xremap.service .config/systemd/user/fcitx5-resume-restart.service .config/wezterm/wezterm.lua .config/herdr/config.toml .config/oh-my-posh/dracula.omp.json .config/rofi/config.rasi .config/rofi/themes/alfred-dracula.rasi .config/yazi/theme.toml .config/yazi/package.toml)
 for file in "${LINK_FILES[@]}"; do
   target="$HOME/$file"
   mkdir -p "$(dirname "$target")"
@@ -44,6 +44,11 @@ for file in "${LINK_FILES[@]}"; do
   ln -sf "$DOTFILES_DIR/$file" "$target"
   echo "$target -> $DOTFILES_DIR/$file"
 done
+
+# yazi: restore flavors (e.g. Dracula) locked in package.toml
+if command -v ya >/dev/null 2>&1; then
+  ya pkg install
+fi
 
 mkdir -p "$HOME/.config/autostart"
 cp /usr/share/applications/org.fcitx.Fcitx5.desktop "$HOME/.config/autostart/org.fcitx.Fcitx5.desktop"

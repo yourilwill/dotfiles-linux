@@ -19,3 +19,7 @@ fzf-ghq-widget() {
   READLINE_POINT=0
 }
 bind -x '"\C-g": fzf-ghq-widget'
+
+# asdf
+. "$HOME/.asdf/asdf.sh"
+. "$HOME/.asdf/internal/completions/asdf.bash"

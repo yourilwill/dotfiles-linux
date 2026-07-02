@@ -7,6 +7,8 @@ config.window_background_opacity = 0.8
 
 config.audible_bell = "Disabled"
 
+config.enable_kitty_graphics = true
+
 local function adjust_opacity(window, delta)
 	local overrides = window:get_config_overrides() or {}
 	local current = overrides.window_background_opacity or config.window_background_opacity

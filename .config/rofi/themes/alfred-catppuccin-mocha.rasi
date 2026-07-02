@@ -5,7 +5,7 @@
     bg-alt:    #45475aee;
     bg-sel:    #cba6f7;
     fg:        #cdd6f4;
-    fg-sel:    #1e1e2e;
+    fg-sel:    #11111b;
     fg-muted:  #6c7086;
 
     background-color: transparent;
@@ -84,4 +84,8 @@ element-icon {
 
 element-text {
     vertical-align: 0.5;
+}
+
+element-text selected {
+    text-color: @fg-sel;
 }
